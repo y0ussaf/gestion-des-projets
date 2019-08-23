@@ -1,0 +1,13 @@
+var express = require('express')
+var passport = require('passport')
+var projetRouter = require('./projet')
+var userRouter = require('./user')
+var authRouter = require('./auth')
+var conversationRouter = require('./conversation')
+var router = express.Router()
+var authMiddleware = passport.authenticate('jwt',{session:false})
+router.use('/projets',authMiddleware,projetRouter)
+router.use('/users',authMiddleware,userRouter)
+router.use('/conversations',authMiddleware,conversationRouter)
+router.use('/',authRouter)
+module.exports = router
